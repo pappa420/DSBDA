@@ -1,0 +1,97 @@
+#Loading NLTK:
+
+import nltk
+nltk.download('punkt')
+
+#Tokenization(The process of breaking down a text paragraph into smaller chunks such as words or sentence is called Tokenization.):
+
+from nltk.tokenize import sent_tokenize
+
+
+#Sentence Tokenization(Sentence tokenizer breaks text paragraph into sentences.):
+
+text = """ I am SANKET """
+tokenized_text = sent_tokenize(text)
+
+print(tokenized_text)
+
+Word Tokenization(Word tokenizer breaks text paragraph into words.):
+
+from nltk.tokenize import word_tokenize
+tokenized_text = word_tokenize(text)
+print(tokenized_text)
+
+import nltk
+nltk.download('stopwords')
+
+#Stop words(Stopwords considered as noise in the text.):
+
+from nltk.corpus import stopwords
+stop_words = set(stopwords.words("english"))
+print(stop_words)
+
+#Stemming(Stemming is a process of linguistic normalization, which reduces words to their word root word or chops off the derivational affixes.):
+
+text = """I am SANKET KSHIRSAGAR"""
+tokenized_sent = sent_tokenize(text)
+filtered_sent=[]
+for w in tokenized_sent:
+    if w not in stop_words:
+        filtered_sent.append(w)
+print("Tokenized Sentence:",tokenized_sent)
+print("Filtered Sentence:",filtered_sent)
+
+import pkg_resources
+import pip
+import sys
+installedPackages = {pkg.key for pkg in pkg_resources.working_set}
+required = {'nltk', 'spacy', 'textblob','gensim' }
+missing = required - installedPackages
+if missing:
+    !pip install nltk==3.4
+    !pip install textblob==0.15.3
+    !pip install gensim==3.8.2    
+    !pip install -U SpaCy==2.2.0
+    !python -m spacy download en_core_web_lg
+
+
+import nltk
+import nltk.data
+nltk.download('punkt')
+from textblob import TextBlob
+import spacy
+#Run the command python -m spacy download en_core_web_sm to download this
+import en_core_web_lg
+nlp = en_core_web_lg.load()
+
+#Other helper packages
+
+import pandas as pd
+import numpy as np
+
+#Download nltk data lobraries. All can be downloaded by using nltk.download('all')
+
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
+nltk.download('averaged_perceptron_tagger')
+
+#Lemmatization(Lemmatization reduces words to their base word, which is linguistically correct lemmas.):
+
+text = "This world has a lot of faces "
+from textblob import Word
+parsed_data= TextBlob(text).words
+parsed_data
+
+#POS Tagging(The primary target of Part-of-Speech(POS) tagging is to identify the grammatical group of a given word.):
+
+text = 'Sinhgad Institue Of Technology And Science Narhe'
+TextBlob(text).tags
+
+
+
+Theory:
+Text Analytics has lots of applications in today's online world. By analyzing tweets on Twitter, we
+can find trending news and peoples reaction on a particular event. Amazon can understand user
+feedback or review on the specific product. BookMyShow can discover people's opinion about the
+movie. Youtube can also analyze and understand peoples viewpoints on a video.

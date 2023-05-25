@@ -1,0 +1,38 @@
+import pandas as pd   			//Import Pandas Package:
+
+data=pd.read_csv("ass3.csv")		//Assign dataset
+df=pd.DataFrame(data)			//Convert into DataFrame
+df						//Display the data in dataset
+
+print(df.describe())			//Describe the given data
+
+print(df.dtypes)
+
+#Mean(The arithmetic mean of a given data is the sum of all observations divided by the number of observations.):
+
+print("Mean of Iris dataset \n",df.groupby('target').mean(),"\n")
+
+#Median(Median refers to the middle value of a data.):
+
+print("Median of Iris dataset \n",df.groupby('target').median(),"\n")
+
+#Mode(The Mode refers to the most frequently occurring value in your data.)
+
+print("Mode of Iris dataset \n",df.mode(axis=1, numeric_only=True),"\n") 		//column
+print("Mode of Iris dataset \n",df.mode(axis=0, numeric_only=False),"\n") 		//row
+
+#Standard Deviation(The Standard Deviation is a measure of how spread out numbers are.)
+
+print("STD of Iris dataset \n",df.groupby('target').std(),"\n")
+
+#Varience(The average of the squared differences from the Mean.)
+
+print("Variance of Iris dataset \n",df.groupby('target').var(),"\n")
+
+#Maximum
+
+print("Max of Iris dataset \n",df.groupby('target').max(),"\n")
+
+#Minimum
+
+print("Min of Iris dataset \n",df.groupby('target').min(),"\n")

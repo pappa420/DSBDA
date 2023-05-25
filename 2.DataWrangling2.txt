@@ -1,0 +1,156 @@
+import pandas as pd			//Import Pandas Package:
+import numpy as np
+import seaborn as sns
+from scipy import stats
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
+
+data=pd.read_csv("stud_db.csv")		//Assign dataset
+df=pd.DataFrame(data)				//Convert into DataFrame
+df							 //Display the data in dataset
+
+df.info()
+
+df.describe()					//Describe the given data
+
+df.head(10)						//Display first 10 rows of data
+
+#Filling Null Values
+
+df['DSBDA'] = df['DSBDA'].fillna(df['DSBDA'].mean())
+df['AI'] = df['AI'].fillna(df['AI'].mean())
+df['WT'] = df['WT'].fillna(df['WT'].mean())
+df['Total'] = df['Total'].fillna(df['Total'].mean())
+df['Average'] = df['Average'].fillna(df['Average'].mean())
+df.head(5)
+
+
+//Boxplot method(It captures the summary of the data effectively and efficiently with only a simple box:
+
+sns.boxplot(df['Age'])   
+and whiskers.)
+
+
+#Scatter Plot Method(It is used when you have paired numerical data, or when your dependent variable has
+multiple values for each reading independent variable, or when trying to determine the relationship between the two variables.):
+
+x=df.Age
+y=df.RollNo
+plt.scatter(x,y,c="Green",s=200)
+plt.show()
+
+#Z-score Method(It is also called a standard score. This value/score helps to understand that how far is the data point from the mean. And after setting up a threshold value one can utilize z score values of data points to define the outliers.):
+
+data=df.Age
+m=np.mean(data)
+sd=np.std(data)
+print("Mean is :",m)
+print("Standard Deviation is:",sd)
+
+threshold = 3
+outlier = []
+for i in data:
+    z = (i-m)/sd
+    if z > threshold:
+        outlier.append(i)
+print('Outlier in dataset is', outlier)
+
+#IQR (Inter Quartile Range approach to finding the outliers is the most commonly used and most trusted approach used in the research field.):
+
+data=np.sort(df.Age)
+Q1 = np.percentile(data, 25, interpolation = 'midpoint') 
+Q2 = np.percentile(data, 50, interpolation = 'midpoint') 
+Q3 = np.percentile(data, 75, interpolation = 'midpoint') 
+ 
+print('Q1 25 percentile of the given data is, ', Q1)
+print('Q1 50 percentile of the given data is, ', Q2)
+print('Q1 75 percentile of the given data is, ', Q3)
+ 
+IQR = Q3 - Q1
+print('Interquartile range is', IQR)
+
+
+low_lim = Q1 - 1.5 * IQR
+up_lim = Q3 + 1.5 * IQR
+print('low_limit is', low_lim)
+print('up_limit is', up_lim)
+outlier =[]
+for x in data:
+    if ((x> up_lim) or (x<low_lim)):
+        outlier.append(x)
+print('Outlier in the dataset is', outlier)
+
+#Removing the Outliers
+
+df.drop(10, inplace = True)
+df
+
+sns.boxplot(df['Age'])
+
+#Log Transform
+
+df['log_total'] = np.log2(df['Total'])
+df
+
+#Normal Distribution
+
+#Z-index Scaling
+
+z_copy=df.copy()
+for col in ['Average']:
+    z_copy[col]=(z_copy[col]-z_copy[col].mean())/z_copy[col].std()
+sns.displot(z_copy['Average'])
+plt.show()
+
+
+
+
+Theory: (Explain all the code decription given above)
+MinMax Scaler
+It just scales all the data between 0 and 1. The formula for calculating the scaled value is
+
+x_scaled = (x – x_min)/(x_max – x_min)
+
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+df_scaled[col_names] = scaler.fit_transform(features.values)
+You can see how the values were scaled. The minimum value among the columns became 0,
+and the maximum value was changed to 1, with other values in between. However, suppose
+we don’t want the income or age to have values like 0. Let us take the range to be (5, 10)
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler(feature_range=(5, 10))
+
+df_scaled[col_names] = scaler.fit_transform(features.values)
+df_scaled
+Standard Scaler
+For each feature, the Standard Scaler scales the values such that the mean is 0 and the standard
+deviation is 1(or the variance).
+
+x_scaled = x – mean/std_dev
+
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+
+df_scaled[col_names] = scaler.fit_transform(features.values)
+df_scaled
+MaxAbsScaler
+In simplest terms, the MaxAbs scaler takes the absolute maximum value of each column and
+divides each value in the column by the maximum value.
+Thus, it first takes the absolute value of each value in the column and then takes the maximum
+value out of those. This operation scales the data between the range [-1, 1].
+df["Balance"] = [100.0, -263.0, 2000.0, -5.0]
+from sklearn.preprocessing import MaxAbsScaler
+scaler = MaxAbsScaler()
+
+df_scaled[col_names] = scaler.fit_transform(features.values)
+df_scaled
+Robust Scaler
+The Robust Scaler, as the name suggests is not sensitive to outliers. This scaler
+
+1. removes the median from the data
+2. scales the data by the InterQuartile Range(IQR)
+x_scaled = (x – Q1)/(Q3 – Q1)
+from sklearn.preprocessing import RobustScaler
+scaler = RobustScaler()
+df_scaled[col_names] = scaler.fit_transform(features.values)
+df_scaled

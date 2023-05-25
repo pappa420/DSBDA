@@ -1,0 +1,132 @@
+Import libraries and loading Data:
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from seaborn import load_dataset
+
+#titanic dataset
+df=pd.read_csv('titanic.csv')
+
+df.head()
+
+df.describe()
+
+df.info()
+
+df.isnull().sum()
+
+df['Age']=df['Age'].fillna(np.mean(df['Age']))
+df['Fare']=df['Fare'].fillna(np.mean(df['Fare']))
+df['Cabin']=df['Cabin'].fillna(df['Cabin'].mode()[0])
+
+df.isnull().sum()
+
+sns.boxplot(x='Sex',y="Age", data=df)
+
+sns.boxplot(x='Sex',y="Age",data=df, hue="Survived")
+plt.show()
+
+sns.boxplot(x="Sex", y="Age", data=df, hue="Survived")
+
+df=pd.read_csv('train.csv')
+
+df.head()
+
+df.isnull().sum()
+
+df['Age']=df['Age'].fillna(np.mean(df['Age']))
+df['Cabin']=df['Cabin'].fillna(df['Cabin'].mode()[0])
+df['Embarked']=df['Embarked'].fillna(df['Embarked'].mode()[0])
+
+sns.boxplot(df['Sex'], df['Age'], hue=df['Survived'])
+
+sns.barplot(df['Sex'], df['Age'], hue=df['Survived'])
+
+sns.barplot(df['Pclass'],df['Fare'],hue=df['Sex'])
+
+sns.swarmplot(x="Sex", y="Age", data=df)
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+dataset = sns.load_dataset('titanic')
+dataset.head()
+
+dataset.corr()
+
+corr = dataset.corr()
+sns.heatmap(corr)
+
+corr = dataset.corr()
+sns.heatmap(corr, annot=True)
+
+import seaborn as sns
+dataset = sns.load_dataset('titanic')
+
+sns.histplot(dataset['fare'], kde=False, bins=10)
+
+
+
+Theory:
+There are various techniques to understand your data, And the basic need is you should have
+the knowledge of Numpy for mathematical operations and Pandas for data manipulation. We
+are using Titanic dataset. For demonstrating some of the techniques we will also use an inbuilt
+dataset of seaborn as tips data which explains the tips each waiter gets from different
+customers.
+
+Categorical Data:
+A variable that has text-based information is referred to as categorical variables. Now
+following are various plots which we can use for visualizing Categorical data.
+1) CountPlot:
+Countplot is basically a count of frequency plot in form of a bar graph. It plots the count of
+each category in a separate bar. When we use the pandas’ value counts function on any
+column. It is the same visual form of the value counts function. In our data-target variable is
+survived and it is categorical so plot a countplot of this.
+
+2) Pie Chart:
+The pie chart is also the same as the countplot, only gives us additional information about the
+percentage presence of each category in data means which category is getting how much
+weightage in data. Now we check about the Sex column, what is a percentage of Male and
+Female members traveling.
+
+Numerical Data:
+Analyzing Numerical data is important because understanding the distribution of variables
+helps to further process the data. Most of the time, we will find much inconsistency with
+numerical data so we have to explore numerical variables.
+1) Histogram:
+A histogram is a value distribution plot of numerical columns. It basically creates bins in
+various ranges in values and plots it where we can visualize how values are distributed. We can
+have a look where more values lie like in positive, negative, or at the center(mean). Let’s have
+a look at the Age column.
+
+2) Distplot:
+Distplot is also known as the second Histogram because it is a slight improvement version of
+the Histogram. Distplot gives us a KDE(Kernel Density Estimation) over histogram which
+
+explains PDF(Probability Density Function) which means what is the probability of each value
+occurring in this column.
+
+3) Boxplot:
+Boxplot is a very interesting plot that basically plots a 5 number summary. to get 5 number
+summary some terms we need to describe.
+
+1) Scatter Plot:
+To plot the relationship between two numerical variables scatter plot is a simple plot to do. Let
+us see the relationship between the total bill and tip provided using a scatter plot.
+
+1) Bar Plot:
+Bar plot is a simple plot which we can use to plot categorical variable on the x-axis and
+numerical variable on y-axis and explore the relationship between both variables. The blacktip
+on top of each bar shows the confidence Interval. let us explore P-Class with age.
+
+2) Boxplot:
+We have already study about boxplots in the Univariate analysis above. we can draw a separate
+boxplot for both the variable. let us explore gender with age using a boxplot.
+
+3) Distplot:
+Distplot explains the PDF function using kernel density estimation. Distplot does not have a
+hue parameter but we can create it. Suppose we want to see the probability of people with an
+age range that of survival probability and find out whose survival probability is high to the age
+range of death ratio.

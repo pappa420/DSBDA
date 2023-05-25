@@ -1,0 +1,120 @@
+import pandas as pd					//Import Pandas Package:
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+dataset = sns.load_dataset('titanic')	
+dataset.head()
+
+sns.distplot(dataset['fare'])
+
+sns.distplot(dataset['fare'], kde=False)
+
+sns.distplot(dataset['fare'], kde=False, bins=10)
+
+sns.jointplot(x='age', y='fare', data=dataset)
+
+sns.jointplot(x='age', y='fare', data=dataset, kind='hex')
+
+sns.rugplot(dataset['fare'])
+
+sns.barplot(x='sex', y='age', data=dataset)
+
+sns.countplot(x='sex', data=dataset)
+
+sns.boxplot(x='sex', y='age', data=dataset)
+
+sns.boxplot(x='sex', y='age', data=dataset, hue="survived")
+
+sns.violinplot(x='sex', y='age', data=dataset)
+
+sns.violinplot(x='sex', y='age', data=dataset, hue='survived')
+
+sns.stripplot(x='sex', y='age', data=dataset, jitter=False)
+
+sns.stripplot(x='sex', y='age', data=dataset)
+
+sns.stripplot(x='sex', y='age', data=dataset, jitter=True, hue='survived')
+
+
+
+Theory:
+A. Distribution Plots:
+These plots help us to visualise the distribution of data. We can use these plots to understand
+the mean, median, range, variance, deviation, etc of the data.
+a. Distplot
+● Dist plot gives us the histogram of the selected continuous variable.
+● It is an example of a univariate analysis.
+● We can change the number of bins i.e. number of vertical bars in a histogram
+
+b. Joint Plot
+● It is the combination of the distplot of two variables.
+● It is an example of bivariate analysis.
+
+● We additionally obtain a scatter plot between the variables to reflect their linear
+relationship. We can customise the scatter plot into a hexagonal plot, where, the more
+the colour intensity, the more will be the number of observations.
+
+a. c. The Rug Plot
+b. The rugplot() is used to draw small bars along the x-axis for each point in the dataset. To plot
+a rug plot, you need to pass the name of the column. Let's plot a rug plot for fare.
+
+
+2. Categorical Plots
+
+b. The Bar Plot
+The barplot() is used to display the mean value for each value in a categorical column, against a
+numeric column. The first parameter is the categorical column, the second parameter is the
+numeric column while the third parameter is the dataset. For instance, if you want to know the
+mean value of the age of the male and female passengers, you can use the bar plot as follows.
+
+c. The Count Plot
+
+The count plot is similar to the bar plot, however it displays the count of the categories in a
+specific column. For instance, if we want to count the number of males and women passenger
+we can do so using count plot as follows:
+
+d. The Box Plot
+The box plot is used to display the distribution of the categorical data in the form of quartiles.
+The centre of the box shows the median value. The value from the lower whisker to the bottom
+of the box shows the first quartile. From the bottom of the box to the middle of the box lies the
+second quartile. From the middle of the box to the top of the box lies the third quartile and
+finally from the top of the box to the top whisker lies the last quartile.
+
+
+e. The Violin Plot
+The violin plot is similar to the box plot, however, the violin plot allows us to display all the
+components that actually correspond to the data point. The violinplot() function is used to plot
+the violin plot. Like the box plot, the first parameter is the categorical column, the second
+parameter is the numeric column while the third parameter is the dataset.
+
+Advanced Plots:
+a. The Strip Plot
+The strip plot draws a scatter plot where one of the variables is categorical. We have seen scatter
+plots in the joint plot and the pair plot sections where we had two numeric variables. The strip
+plot is different in a way that one of the variables is categorical in this case, and for each
+category in the categorical variable, you will see a scatter plot with respect to the numeric
+column.
+
+b. The Swarm Plot
+The swarm plot is a combination of the strip and the violin plots. In the swarm plots, the points
+are adjusted in such a way that they don't overlap. Let's plot a swarm plot for the distribution of
+age against gender. The swarmplot() function is used to plot the violin plot. Like the box plot,
+the first parameter is the categorical column, the second parameter is the numeric column while
+the third parameter is the dataset.
+
+
+1. Matrix Plots
+Matrix plots are the type of plots that show data in the form of rows and columns. Heat maps are
+the prime examples of matrix plots.
+a. Heat Maps
+Heat maps are normally used to plot correlation between numeric columns in the form of a
+matrix. It is important to mention here that to draw matrix plots, you need to have meaningful
+information on rows as well as columns. Let's plot the first five rows of the Titanic dataset to see
+if both the rows and column headers have meaningful information.
+
+
+b. Cluster Map:
+In addition to the heat map, another commonly used matrix plot is the cluster map. The
+cluster map basically uses Hierarchical Clustering to cluster the rows and columns of the
+matrix.

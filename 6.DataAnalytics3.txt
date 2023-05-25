@@ -1,0 +1,133 @@
+
+//Import libraries and create alias for Pandas, Numpy and Matplotlib:
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+//Initialize the data frame:
+
+data = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/iris-data.csv")
+data.head()
+
+data.shape
+
+data.head()
+
+data.tail()
+
+data.info()
+
+data.describe()
+
+data.isnull().sum()
+
+
+X = data.drop(['class'], axis=1)
+y = data.drop(['sepal length',  'sepal width',  'petal length',  'petal width'], axis=1)
+print(X)
+print(y)
+print(X.shape)
+print(y.shape)
+
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=True)
+print(X_train.shape)
+print(X_test.shape)
+print(y_train.shape)
+print(y_test.shape)
+
+//Use Naive Bayes algorithm( Train the Machine ) to Create:
+
+from sklearn.naive_bayes import GaussianNB
+model = GaussianNB()
+model.fit(X_train, y_train)
+
+//Predict the y_pred for all values of train_x and test_x:
+
+y_pred = model.predict(X_test)
+model.score(X_test,y_test)
+
+from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay
+
+print(accuracy_score(y_test, y_pred))
+
+//Evaluate the performance of Model for train_y and test_y:
+
+cm = confusion_matrix(y_test, y_pred)
+disp = ConfusionMatrixDisplay(confusion_matrix = cm)
+print("Confusion matrix:")
+print(cm)
+
+disp.plot()
+plt.show()
+
+
+def get_confusion_matrix_values(y_true, y_pred):
+    cm = confusion_matrix(y_true, y_pred)
+    return(cm[0][0], cm[0][1], cm[1][0], cm[1][1])
+
+TP, FP, FN, TN = get_confusion_matrix_values(y_test, y_pred)
+print("TP: ", TP)
+print("FP: ", FP)
+print("FN: ", FN)
+print("TN: ", TN)
+
+
+
+print("The Accuracy is ", (TP+TN)/(TP+TN+FP+FN))
+print("The precision is ", TP/(TP+FP))
+print("The recall is ", TP/(TP+FN))
+
+
+
+
+Theory:
+Confusion Matrix Definition
+A confusion matrix is used to judge the performance of a classifier on the test dataset for which we
+already know the actual values. Confusion matrix is also termed as Error matrix. It consists of a
+
+count of correct and incorrect values broken down by each class. It not only tells us the error made
+by classifier but also tells us what type of error the classifier made. So, we can say that a confusion
+matrix is a performance measurement technique of a classifier model where output can be two
+classes or more. It is a table with four different groups of true and predicted values.
+Terminologies in Confusion Matrix
+The confusion matrix shows us how our classifier gets confused while predicting. In a confusion
+matrix we have four important terms which are:
+1. True Positive (TP)- Both actual and predicted values are Positive.
+2. True Negative (TN)- Both actual and predicted values are Negative.
+3. False Positive (FP)- The actual value is negative but we predicted it as positive. 4.
+False Negative (FN)- The actual value is positive but we predicted it as negative.
+
+Performance Metrics
+Confusion matrix not only used for finding the errors in prediction but is also useful to find some
+important performance metrics like Accuracy, Recall, Precision, F-measure. We will discuss these
+terms one by one.
+
+Accuracy
+As the name suggests, the value of this metric suggests the accuracy of our classifier in predicting
+results.
+It is defined as:
+Accuracy = (TP + TN) / (TP + TN + FP + FN)
+A 99% accuracy can be good, average, poor or dreadful depending upon the problem.
+
+Precision
+Precision is the measure of all actual positives out of all predicted positive values. It
+is defined as:
+
+Precision = TP / (TP + FP)
+
+Recall
+Recall is the measure of positive values that are predicted correctly out of all actual positive values.
+
+It is defined as:
+Recall = TP / (TP + FN)
+High Value of Recall specifies that the class is correctly known (because of a small number of False
+Negative).
+F-measure
+It is hard to compare classification models which have low precision and high recall or vice versa. So,
+for comparing the two classifier models we use F-measure. F-score helps to find the metrics of Recall
+and Precision in the same interval. Harmonic Mean is used instead of Arithmetic Mean.
+F-measure is defined as:
+F-measure = 2 * Recall * Precision / (Recall + Precision)
+The F-Measure is always closer to the Precision or Recall, whichever has a smaller value

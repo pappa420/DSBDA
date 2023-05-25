@@ -1,0 +1,99 @@
+First, we will import all the libraries:
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+Now we will import the dataset and select only age and salary as the features:
+
+dataset =pd.read_csv('Social_Network_Ads.csv')
+
+dataset.head()
+
+df=pd.DataFrame(dataset)
+df
+
+#X and Y define  
+
+X = df.iloc[:,[2,3]].values
+y = df.iloc[:,4].values
+
+print(X[:3,:])
+print('-'*15)
+print(y[:3])
+
+#splitting dataset into traning set and testing set 
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
+
+print(X_train[:3])
+print('-'*15)
+print(y_train[:3])
+
+print(X_test[:3])
+print('-'*15)
+print(y_test[:3])
+
+#feature scaling
+
+from sklearn.preprocessing import StandardScaler
+sc = StandardScaler()
+X_train = sc.fit_transform(X_train)
+X_test = sc.transform(X_test)
+
+print(X_train[:3])
+print('-'*15)
+print(X_test[:3])
+
+#Fitting Logistic Regression Model 
+
+from sklearn.linear_model import LogisticRegression
+classifier = LogisticRegression(random_state = 0)
+classifier.fit(X_train, y_train)
+
+y_pred = classifier.predict(X_test)
+
+print(y_pred)
+
+from sklearn.metrics import confusion_matrix,classification_report
+
+cm = confusion_matrix(y_test, y_pred)
+cl_report=classification_report(y_test,y_pred)
+
+print(cm)
+
+print(cl_report)
+
+
+
+Theory:
+What is logistic Regression?
+Logistic regression is a statistical model that in its basic form uses a logistic function to model
+a binary dependent variable, although many more complex extensions exist. In regression
+analysis, logistic regression (or logit regression) is estimating the parameters of a logistic
+model (a form of binary regression). Logistic regression is basically a supervised
+classification algorithm. In a classification problem, the target variable(or output), y, can take
+only discrete values for a given set of features(or inputs), X.
+● Dependent variable: The target variable in a logistic regression model, which we are trying to
+predict.
+● Independent variables: The input characteristics or predictor factors applied to the dependent
+variable’s predictions.
+● Logistic function: The formula used to represent how the independent and dependent variables
+relate to one another. The logistic function transforms the input variables into a probability
+value between 0 and 1, which represents the likelihood of the dependent variable being 1 or 0.
+● Odds: The proportion of an event’s chances of happening to its chances of not happening. The
+chances are used in logistic regression to model the connection between the independent and
+dependent variables.
+● Log-odds: The logistic regression model’s calculation is made simpler by using the logarithm of
+the odds.
+● Coefficient: The logistic regression model’s estimated parameters, which show how the
+independent and dependent variables relate to one another.
+● Intercept: A constant term in the logistic regression model, which represents the log-odds when
+all independent variables are equal to zero.
+● Maximum likelihood estimation: The method used to estimate the coefficients of the logistic
+regression model, which maximizes the likelihood of observing the data given the model. ●
+Confusion matrix: A table that lists the number of true positive, true negative, false positive, and
+
+false negative predictions made by a logistic regression model is used to assess the model’s
+performance.

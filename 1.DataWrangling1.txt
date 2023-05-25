@@ -1,0 +1,89 @@
+
+import pandas as pd					//Import Pandas Package:
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+
+data=pd.read_csv("ass1.csv")  			//Assign dataset
+df=pd.DataFrame(data)    				//Convert into DataFrame
+df				 				//Display the data in dataset
+
+df.isnull()							//Check for missing values
+
+df['Data_value'] = df['Data_value'].fillna(df['Data_value'].mean())
+df
+
+df['Variable']=df['Variable'].map({'Seasonally adjusted':0,'Actual':1}).astype(float)  			//Reshaping
+df
+
+df=df[df['Data_value']>=12567]   				//Filtering
+df=df.drop(['Gas'],axis=1)
+df
+
+//removing duplicate (data wrangling process)
+
+non_duplicate = df[~df.duplicated('Anzsic_description')]     
+non_duplicate
+
+#Wrangling Data Using Merge Opration
+
+stud_detail=pd.DataFrame({
+    'Id':['101','102','103','104','105','106','107','108','109','110'],
+    'Name':['Sanket','Priya','Prajwal','Rushikesh','Diya','Vivek','Athrva','Rutuja','Pooja','Ravi'],
+    'Gender':['M','F','M','M','F','M','M','F','F','M']
+})
+
+stud_marks=pd.DataFrame({
+    'Id':['101','102','103','104','105','106','107','108','109','110'],
+    'Marks':[50,67,70,84,45,77,67,85,96,79]
+})
+
+print(pd.merge(stud_detail, stud_marks, on='Id')) 			//merge
+
+#Wrangling Data Using Grouping Method
+
+stud_db={
+    'Name':['Sanket','Sanket','Rushikesh','Vivek','Vivek','Rushikesh','Sanket','Prajwal','Prajwal','Athrav'],
+    'Subject':['DSBDA','WT','WT','DSBDA','AI','DSBDA','AI','DSBDA','AI','DSBDA'],
+    'Mark':[78,64,83,42,90,58,76,55,40,88]
+}
+df=pd.DataFrame(stud_db)
+df
+
+grouped = df.groupby('Subject')
+print(grouped.get_group('DSBDA'))
+
+
+
+Theory:
+Data Wrangling in Python:
+Data Wrangling is the process of gathering, collecting, and transforming Raw data into another
+format for better understanding, decision-making, accessing, and analysis in less time. Data
+Wrangling is also known as Data Munging.
+
+Importance Of Data Wrangling:
+Data Wrangling is a very important step. The below example will explain its importance as :
+Books selling Website want to show top-selling books of different domains, according to user
+preference. For example, a new user search for motivational books, then they want to show those
+motivational books which sell the most or having a high rating, etc.
+But on their website, there are plenty of raw data from different users. Here the concept of Data
+Munging or Data Wrangling is used. As we know Data is not Wrangled by System. This process
+is done by Data Scientists. So, the data Scientist will wrangle data in such a way that they will
+sort that motivational books that are sold more or have high ratings or user buy this book with
+these package of Books, etc. On the basis of that, the new user will make choice. This will
+explain the importance of Data wrangling.
+
+Data wrangling in python deals with the below functionalities:
+1. Data exploration: In this process, the data is studied, analyzed and understood by
+visualizing representations of data.
+2. Dealing with missing values: Most of the datasets having a vast amount of data contain
+missing values of NaN, they are needed to be taken care of by replacing them with mean,
+mode, the most frequent value of the column or simply by dropping the row having
+a NaN value.
+3. Reshaping data: In this process, data is manipulated according to the requirements, where
+new data can be added or pre-existing data can be modified.
+4. Filtering data: Some times datasets are comprised of unwanted rows or columns which are
+required to be removed or filtered
+5. Other: After dealing with the raw dataset with the above functionalities we get an efficient
+dataset as per our requirements and then it can be used for a required purpose like data
+analyzing, machine learning, data visualization, model training etc.
